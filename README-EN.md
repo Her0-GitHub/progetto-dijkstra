@@ -1,4 +1,6 @@
 # Dijkstra Project
+
+[Italiano](./README.md)
     
 ## Project Description
 The project aims to develop a software application that implements the Dijkstra's algorithm to determine the shortest path between two nodes in a graph. The app will be designed to be intuitive and user-friendly, with a particular focus on the user interface and clear presentation of the output.

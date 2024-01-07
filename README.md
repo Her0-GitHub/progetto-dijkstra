@@ -1,4 +1,6 @@
 # Progetto Dijkstra
+
+[English](./README-EN.md)
     
 ## Descrizione del Progetto
 Il progetto mira a sviluppare un'applicazione software che implementa l'algoritmo di Dijkstra per determinare il cammino minimo tra due nodi in un grafo. L'app sarà progettata per essere intuitiva e user-friendly, con particolare attenzione all'interfaccia utente e alla presentazione chiara dell'output.
