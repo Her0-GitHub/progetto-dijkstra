@@ -4,3 +4,40 @@ body{
     background-image: radial-gradient(#ffdecb 2px, rgba(255,255,255,0) 2px);
     background-size: 40px 40px;
 }
+.line{
+    position: absolute;
+    border-bottom: 1px solid black;
+    left: 100px
+}
+.line-oblique{
+    position: absolute;
+    border-bottom: 5px solid black;
+    transform: rotate(45deg) translate(0, -50%);
+}
+
+.node{
+    position: absolute;
+    border-radius: 50%;
+    background-color: orangered;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 50px;
+}
+#A{
+    left: 100px;
+    top: 100px;
+}
+#B{
+    left: 300px;
+    top: 300px;
+}
+#A-B{
+    top: 150px;
+    left: 150px;
+    width: calc(300px - 100px);
+    height: calc(300px - 100px);
+}
