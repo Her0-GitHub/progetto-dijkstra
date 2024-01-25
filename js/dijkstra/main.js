@@ -5,6 +5,9 @@ class Node {
         this.paths = paths || [];
         this.shortestPath = ["", null];
     }
+    addPath(path) {
+        this.paths.push(path);
+    }
     setToStart() {
         this.known = true;
         this.shortestPath = [this.name, 0];
@@ -54,8 +57,11 @@ class Graph {
                     }
                 }
             });
+            if (nextNode === null) {
+                nextNode = this.nodes.find(node => !node.known);
+            }
             currentNode = nextNode.goTo();
-            nextNode = null; // AGGIUNTO ADESSO SONO RITARDATO MA TIPO TROPPO (ovviamente non funziona ancora)
+            nextNode = null;
         } while (this.nodes.some(node => !node.known));
     }
     doDijkstraFromTo(start, end) {
@@ -66,17 +72,47 @@ class Graph {
         do {
             path.push(currentNode.name);
             currentNode = this.getNodeByName(currentNode.shortestPath[0]);
+            if (currentNode == null) {
+                console.log("No path found.");
+                return;
+            }
         } while (currentNode.name !== start);
         path.push(start);
         console.log(path.reverse().join(" -> "));
+        console.log("Weight: " + endNode.shortestPath[1]);
+    }
+
+    static randomGraph(nNodes) {
+        let graph = new Graph();
+
+        for (let i = 0; i < nNodes; i++) {
+            // letters from A to Z
+            graph.addNode(new Node(String.fromCharCode(65 + i)));
+        }
+        graph.nodes.forEach(node => {
+            let nPaths = Math.floor(Math.random() * (nNodes / 2)); // from 1 to nNodes, non 0 per ora
+            for (let i = 0; i < nPaths; i++) {
+                let randNode = graph.nodes[Math.floor(Math.random() * nNodes)];
+
+                if (randNode.name !== node.name && !node.paths.some(path => path[0] === randNode.name)) {
+                    let randWeight = Math.floor(Math.random() * 10) + 1;
+                    node.addPath([randNode.name, randWeight]);
+
+                    randNode.addPath([node.name, randWeight]);
+                }
+            }
+        });
+        graph.nodes.forEach(node => console.log(node.name + ": " + node.paths));
+        return graph;
     }
 }
 
-let graph = new Graph();
-graph.addNode(new Node('A', [["B", 3], ["C", 2], ["D", 6]]));
+let graph = Graph.randomGraph(10);
+graph.doDijkstraFromTo('A', 'F');
+/*graph.addNode(new Node('A', [["B", 3], ["C", 2], ["D", 6]]));
 graph.addNode(new Node('B', [["A", 3], ["D", 2], ["E", 2]]));
 graph.addNode(new Node('C', [["A", 2], ["D", 1], ["F", 3]]));
 graph.addNode(new Node('D', [["A", 6], ["B", 2], ["C", 1], ["E", 4], ["F", 2]]));
 graph.addNode(new Node('E', [["B", 2], ["D", 4], ["F", 1]]));
 graph.addNode(new Node('F', [["C", 3], ["D", 2], ["E", 1]]));
-graph.doDijkstraFromTo('A', 'F');
+graph.doDijkstraFrom('A', 'F');*/
