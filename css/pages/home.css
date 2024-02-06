@@ -33,3 +33,33 @@ body{
     font-size: 50px;
     z-index: 0;
 }
+#nav{
+    justify-content: center;
+    padding: 0;
+}
+#nav *{
+    transition: 0.5s ease !important;
+
+}
+.nav-separator{
+    margin: 0 20px;
+}
+#nav-options{
+    width: auto;
+    background-color: #2b2d30;
+    padding: 10px 20px;
+    border-radius: 0 0 10px 10px;
+    flex-direction: column;
+}
+#nav-options h1{
+    color: white;
+    font-size: 25px;
+    margin: 0;
+}
+#nav-buttons{
+    display: flex;
+    justify-content: center;
+}
+.btn-primary{
+    margin: 20px 10px;
+}

@@ -9,7 +9,7 @@ const WIDTH = innerWidth - offset * 2;
 const HEIGHT = innerHeight - offset * 2;
 let nNode = 0;
 
-let currentClickAction = //placeNode;
+let currentClickAction = function (){}//placeNode;
 
 $(window).mouseup(() => {
     if ((x > offset && y > offset) && (x + offset < innerWidth && y + offset < innerHeight)){
@@ -102,9 +102,3 @@ function placeRandomNode(nRandNode) {
 
 
 //placeRandomNode(10);
-
-
-
-placeNode(100, 200);
-placeNode(300, 400);
-placeLine(100, 200, 300, 400,10);
