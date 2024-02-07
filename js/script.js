@@ -73,14 +73,6 @@ function generateRandomCoord() {
 
 }
 
-/*function placeRandomLine(randomCord) {
-    for (let i = 0; i < randomCord.length; i++) {
-        for (let j = i + 1; j < randomCord.length; j++) {
-            if (Math.random() < 0.5) continue;
-            placeLine(randomCord[i][0], randomCord[i][1], randomCord[j][0], randomCord[j][1], Math.floor(Math.random() * 10));
-        }
-    }
-}*/
 
 function placeRandomNode(nRandNode) {
     const randomCord = [];
@@ -102,3 +94,25 @@ function placeRandomNode(nRandNode) {
 
 
 //placeRandomNode(10);
+
+
+$('#placeNodes').click(() => {
+    currentClickAction = currentClickAction === placeNode ? () => console.log("none") : placeNode;
+    console.log("placeNodes");
+});
+
+$('#placeLines').click(() => {
+
+    console.log("placeLines");
+});
+
+$('#deleteNodesAndLines').click(() => {
+    $('.node').click(function () {
+        $(this).remove();
+        nNode--;
+    });
+    $('.line').click(function () {
+        $(this).remove();
+    });
+    console.log("deleteNodesAndLines");
+}
