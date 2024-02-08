@@ -45,6 +45,7 @@ function placeNode(x, y) {
     );
 }
 function placeLine(x, y, toX, toY, weight) {
+    // TODO: set id to line node-node (es. A-B)
     let angle = Math.atan2(toY - y, toX - x);
     $("body").append($("<div>")
         .addClass("line")
@@ -73,7 +74,7 @@ function generateRandomCoord() {
 
 }
 
-
+// TODO: fix this
 function placeRandomNode(nRandNode) {
     const randomCord = [];
 
@@ -88,9 +89,9 @@ function placeRandomNode(nRandNode) {
         console.log(newRandomCord.join(","));
         placeNode(newRandomCord[0], newRandomCord[1]);
     }
-    //placeRandomLine(randomCord);
 }
-
+// TODO: load preset nodes and lines
+// TODO: make preset graph
 
 
 //placeRandomNode(10);
@@ -104,7 +105,7 @@ $('#placeNodes').click(() => {
     console.log("placeNodes");
 });
 
-let toggleButton = [false, false];
+let toggleButton = [false, false]; // TODO: change method to do this
 
 
 $('#placeLines').click(() => {
