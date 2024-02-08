@@ -94,25 +94,51 @@ function placeRandomNode(nRandNode) {
 
 
 //placeRandomNode(10);
+const noting = function () {}
 
+let tempNode = undefined;
 
 $('#placeNodes').click(() => {
-    currentClickAction = currentClickAction === placeNode ? () => console.log("none") : placeNode;
+    currentClickAction = currentClickAction === placeNode ? noting : placeNode;
+    $('.node').click(noting);
     console.log("placeNodes");
 });
 
-$('#placeLines').click(() => {
+let toggleButton = [false, false];
 
-    console.log("placeLines");
+
+$('#placeLines').click(() => {
+    if(toggleButton[0]) {
+        $('.node').off('click');
+        console.log("placeLines off");
+        toggleButton[0] = false;
+    }
+    else {
+        currentClickAction = noting;
+        $('.node').click(function () {
+            if (tempNode === undefined) {
+                tempNode = this;
+            } else if (tempNode === this) {
+                tempNode = undefined;
+            } else {
+                placeLine(  parseInt(tempNode.style.left) + (nodeSize/2),
+                            parseInt(tempNode.style.top) + (nodeSize/2),
+                            parseInt(this.style.left) + (nodeSize/2),
+                            parseInt(this.style.top) + (nodeSize/2));
+            }
+        });
+        console.log("placeLines on");
+        toggleButton[0] = true;
+    }
 });
 
+
 $('#deleteNodesAndLines').click(() => {
-    $('.node').click(function () {
-        $(this).remove();
-        nNode--;
-    });
-    $('.line').click(function () {
-        $(this).remove();
-    });
+    if(!toggleButton[0]){
+        currentClickAction = noting;
+        $('.node').click(function () {nNode--; $(this).remove();});
+        $('.line').click(function () {$(this).remove();});
+    }
+
     console.log("deleteNodesAndLines");
-}
+});
