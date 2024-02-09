@@ -94,52 +94,91 @@ function placeRandomNode(nRandNode) {
 // TODO: make preset graph
 
 
-//placeRandomNode(10);
 const noting = function () {}
 
-let tempNode = undefined;
+function disableAll() {
+    currentClickAction = noting;
+    $('.node').off('click');
+    $('.line').off('click');
+}
 
-$('#placeNodes').click(() => {
-    currentClickAction = currentClickAction === placeNode ? noting : placeNode;
-    $('.node').click(noting);
-    console.log("placeNodes");
-});
+const action = {
+    placeNode: "Piazza nodo",
+    placeLine: "Piazza linea",
+    editNodeLine: "Modifica nodo/linea",
+    deleteNodesAndLines: "Cancella nodi e linee",
+    placeRandomNode: "Piazza nodi random",
+    loadGraph: "Carica grafo",
+    Dijkstra: "Dijkstra",
+    Noting: ""
+};
+//let ActiveAction = action.Noting;
 
-let toggleButton = [false, false]; // TODO: change method to do this
+function ON(element, elementAction, actionName) {
+    console.log("ON");
+    disableAll();
+    //printInFooter(actionName);
+    $(element).off('click').click(elementAction.OFF);
+}
+
+function OFF(element, elementAction) {
+    console.log("OFF");
+    disableAll();
+    //printInFooter(action.Noting);
+    $(element).off('click').click(elementAction.ON);
+}
 
 
-$('#placeLines').click(() => {
-    if(toggleButton[0]) {
-        $('.node').off('click');
-        console.log("placeLines off");
-        toggleButton[0] = false;
+let buttonPlaceNode = {
+    ON: function () {
+        ON(this, buttonPlaceNode, action.placeNode);
+
+        // Implement node placement
+        currentClickAction = placeNode;
+    },
+    OFF: function () {
+        OFF(this, buttonPlaceNode);
     }
-    else {
-        currentClickAction = noting;
-        $('.node').click(function () {
-            if (tempNode === undefined) {
-                tempNode = this;
-            } else if (tempNode === this) {
-                tempNode = undefined;
-            } else {
-                placeLine(  parseInt(tempNode.style.left) + (nodeSize/2),
-                            parseInt(tempNode.style.top) + (nodeSize/2),
-                            parseInt(this.style.left) + (nodeSize/2),
-                            parseInt(this.style.top) + (nodeSize/2));
-            }
-        });
-        console.log("placeLines on");
-        toggleButton[0] = true;
+
+}
+
+$('#placeNodes').click(buttonPlaceNode.ON);
+
+let buttonPlaceLine = {
+    ON: function () {
+        ON(this, buttonPlaceLine, action.placeLine);
+
+        // TODO: implement line placement
+    },
+    OFF: function () {
+        OFF(this, buttonPlaceLine);
     }
-});
+}
 
+$('#placeLines').click(buttonPlaceLine.ON);
 
-$('#deleteNodesAndLines').click(() => {
-    if(!toggleButton[0]){
-        currentClickAction = noting;
-        $('.node').click(function () {nNode--; $(this).remove();});
-        $('.line').click(function () {$(this).remove();});
+let buttonEditNodeLine = {
+    ON: function () {
+        ON(this, buttonEditNodeLine, action.editNodeLine);
+
+        // TODO: implement node/line edit
+    },
+    OFF: function () {
+        OFF(this, buttonEditNodeLine);
     }
+}
 
-    console.log("deleteNodesAndLines");
-});
+$('#editNodeLine').click(buttonEditNodeLine.ON);
+
+let buttonDeleteNodeLine = {
+    ON: function () {
+        ON(this, buttonDeleteNodeLine, action.deleteNodesAndLines);
+
+        // TODO: implement node/line delete
+    },
+    OFF: function () {
+        OFF(this, buttonDeleteNodeLine);
+    }
+}
+
+$('#deleteNodesAndLines').click(buttonDeleteNodeLine.ON);
