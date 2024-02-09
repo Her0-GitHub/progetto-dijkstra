@@ -79,6 +79,9 @@ let buttonDeleteNodeLine = {
         ON(this, buttonDeleteNodeLine, action.deleteNodesAndLines);
 
         // TODO: implement node/line delete
+        $('.node').click(function (){
+            $(this).remove();
+        });
     },
     OFF: function () {
         OFF(this, buttonDeleteNodeLine);
