@@ -81,30 +81,6 @@ class Graph {
         console.log(path.reverse().join(" -> "));
         console.log("Weight: " + endNode.shortestPath[1]);
     }
-
-    static randomGraph(nNodes) {
-        let graph = new Graph();
-
-        for (let i = 0; i < nNodes; i++) {
-            // letters from A to Z
-            graph.addNode(new Node(String.fromCharCode(65 + i)));
-        }
-        graph.nodes.forEach(node => {
-            let nPaths = Math.floor(Math.random() * (nNodes / 2)); // from 1 to nNodes, non 0 per ora
-            for (let i = 0; i < nPaths; i++) {
-                let randNode = graph.nodes[Math.floor(Math.random() * nNodes)];
-
-                if (randNode.name !== node.name && !node.paths.some(path => path[0] === randNode.name)) {
-                    let randWeight = Math.floor(Math.random() * 10) + 1;
-                    node.addPath([randNode.name, randWeight]);
-
-                    randNode.addPath([node.name, randWeight]);
-                }
-            }
-        });
-        graph.nodes.forEach(node => console.log(node.name + ": " + node.paths));
-        return graph;
-    }
 }
 
 let graph = Graph.randomGraph(10);
