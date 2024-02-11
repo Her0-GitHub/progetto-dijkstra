@@ -1,15 +1,16 @@
 
 let x = 0;
 let y = 0;
+let nNode = 0;
+let nDeletedNode = [];
 
 const debug = false;
 const offset = 100; // 100px
 const nodeSize = 100; // 100px
 const WIDTH = innerWidth - offset * 2;
 const HEIGHT = innerHeight - offset * 2;
-let nNode = 0;
 
-let currentClickAction = function (){}//placeNode;
+let currentClickAction = function(){}//placeNode;
 
 $(window).mouseup(() => {
     if ((x > offset && y > offset) && (x + offset < innerWidth && y + offset < innerHeight)){
@@ -24,18 +25,18 @@ $(window).mousemove((e) => {
 });
 
 
-function checkOverlap(node, x, y) {
+/*function checkOverlap(node, x, y) {
     $(".node").each(function (node2) {
         if (Math.abs(node2.offsetLeft - x) < nodeSize && Math.abs(node2.offsetTop - y) < nodeSize) {
             node.style.left = (node2.offsetLeft + nodeSize) + "px";
             node.style.top = (node2.offsetTop + nodeSize) + "px";
         }
     });
-}
+}*/
 
 function placeNode(x, y) {
-    if(nNode >= 26 * 2) return;
-    let name = nNode < 26 ? String.fromCharCode(65 + nNode++) : String.fromCharCode(71 + nNode++);
+    if(nNode - nDeletedNode.length >= 26 * 2) return;
+    let name = nDeletedNode.length > 0 ? nDeletedNode.pop() : nNode < 26 ? String.fromCharCode(65 + nNode++) : String.fromCharCode(71 + nNode++);
     $("body").append(
         $("<div>")
             .addClass("node")
@@ -44,29 +45,47 @@ function placeNode(x, y) {
             .css({left: (x - (nodeSize / 2)) + "px", top: (y - (nodeSize / 2)) + "px"})
     );
 }
-function placeLine(x, y, toX, toY, weight) {
-    // TODO: set id to line node-node (es. A-B)
+function placeLine(from, to, weight=(Math.floor(Math.random() * 15))) {
+    if (from === to || $(`#${from}-${to},#${to}-${from}`).length === 1) return;
+    let fromNode = $(`#${from}`);
+    let toNode = $(`#${to}`);
+    let x = fromNode.offset().left + nodeSize / 2;
+    let y = fromNode.offset().top + nodeSize / 2;
+    let toX = toNode.offset().left + nodeSize / 2;
+    let toY = toNode.offset().top + nodeSize / 2;
     let angle = Math.atan2(toY - y, toX - x);
     $("body").append($("<div>")
         .addClass("line")
+        .attr('id', from + "-" + to)
         .css({
             left: x + "px", top: y + "px",
             width: Math.hypot(toX - x, toY - y) + "px",
             transform: "rotate(" + angle + "rad)"
         })
         .append($("<div>")
-                .addClass("line-text")
-                .text(weight || "")
-                /*.css({transform: "rotate(" +  + "rad)"})*/)
+            .addClass("line-text")
+            .append($("<input>")
+                .css({width: ((weight.toString().length) * 12) + 5 + 'px'})
+                .attr('type', 'number')
+                .val(weight)
+            )
+            //.css()
+        )
     );
 }
 
-function isOverlap(coord1, coord2) {
-    return Math.abs(coord1[0] - coord2[0]) < nodeSize * 2 &&
-        Math.abs(coord1[1] - coord2[1]) < nodeSize * 2;
+placeNode(200, 500)
+placeNode(800, 500)
+placeNode(500, 200)
+placeLine("B", "A")
+placeLine("A", "C")
+
+function isOverlap(cord1, cord2) {
+    return Math.abs(cord1[0] - cord2[0]) < nodeSize * 2 &&
+        Math.abs(cord1[1] - cord2[1]) < nodeSize * 2;
 }
 
-function generateRandomCoord() {
+function getRandomCord() {
     return [
         Math.floor(Math.random() * WIDTH) + offset,
         Math.floor(Math.random() * HEIGHT) + offset
@@ -81,12 +100,12 @@ function placeRandomNode(nRandNode) {
     for (let i = 0; i < nRandNode; i++) {
         let newRandomCord, attempt = 0;
         do {
-            newRandomCord = generateRandomCoord();
+            newRandomCord = getRandomCord();
             if (++attempt > 3) break;
         } while (randomCord.some(cord => isOverlap(cord, newRandomCord)));
         if(attempt > 3) continue;
         randomCord.push(newRandomCord);
-        console.log(newRandomCord.join(","));
+        // console.log(newRandomCord.join(","));
         placeNode(newRandomCord[0], newRandomCord[1]);
     }
 }
@@ -94,3 +113,6 @@ function placeRandomNode(nRandNode) {
 // TODO: make preset graph
 
 
+$('input').on('input', function() {
+    this.style.width = ((this.value.length) * 12) + 5 + 'px';
+});

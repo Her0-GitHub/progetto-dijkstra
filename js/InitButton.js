@@ -22,6 +22,7 @@ function ON(element, elementAction, actionName) {
     console.log("ON");
     disableAll();
     //printInFooter(actionName);
+    setButtons();
     $(element).off('click').click(elementAction.OFF);
 }
 
@@ -31,7 +32,6 @@ function OFF(element, elementAction) {
     //printInFooter(action.Noting);
     $(element).off('click').click(elementAction.ON);
 }
-
 
 let buttonPlaceNode = {
     ON: function () {
@@ -46,8 +46,6 @@ let buttonPlaceNode = {
 
 }
 
-$('#placeNodes').click(buttonPlaceNode.ON);
-
 let buttonPlaceLine = {
     ON: function () {
         ON(this, buttonPlaceLine, action.placeLine);
@@ -58,8 +56,6 @@ let buttonPlaceLine = {
         OFF(this, buttonPlaceLine);
     }
 }
-
-$('#placeLines').click(buttonPlaceLine.ON);
 
 let buttonEditNodeLine = {
     ON: function () {
@@ -72,17 +68,28 @@ let buttonEditNodeLine = {
     }
 }
 
-$('#editNodeLine').click(buttonEditNodeLine.ON);
-
 let buttonDeleteNodeLine = {
     ON: function () {
         ON(this, buttonDeleteNodeLine, action.deleteNodesAndLines);
 
-        // TODO: implement node/line delete
+        // implement node/line delete
+        $('.node').click(function () {
+            $(this).remove();
+            nDeletedNode.push(this.id);
+
+
+        });
     },
     OFF: function () {
         OFF(this, buttonDeleteNodeLine);
     }
 }
 
-$('#deleteNodesAndLines').click(buttonDeleteNodeLine.ON);
+function setButtons(){
+    $('#placeNodes').off('click').click(buttonPlaceNode.ON);
+    $('#placeLines').off('click').click(buttonPlaceLine.ON);
+    $('#editNodeLine').off('click').click(buttonEditNodeLine.ON);
+    $('#deleteNodesAndLines').off('click').click(buttonDeleteNodeLine.ON);
+}
+
+setButtons();
