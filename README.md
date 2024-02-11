@@ -1,4 +1,4 @@
-<img width="120" height="120" style="float: left; margin: 0 15px 0 0;" alt="Dijkstra logo" src="https://raw.githubusercontent.com/Her0-GitHub/progetto-dijkstra/master/img/dijkstra-logo.png">
+<img width="120" height="120" align="left" style="float: left; margin: 0 15px 0 0;" alt="Dijkstra logo" src="https://raw.githubusercontent.com/Her0-GitHub/progetto-dijkstra/master/img/dijkstra-logo.png">
 
 # Progetto Dijkstra
 
@@ -28,7 +28,7 @@ Un'interfaccia molto pulita con vari bottoni disposti nei lati dello schermo per
 - [Font Awesome](https://fontawesome.com/)
 
 ### 📚 Documentazione e Tutorial
-- [Very Good Youtube Video](https://youtu.be/EFg3u_E6eHU)
+- [Very Good YouTube Video](https://youtu.be/EFg3u_E6eHU)
 - [Boostrap Docs](https://getbootstrap.com/docs)
 - [Javascrpit Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [jQuery Docs](https://api.jquery.com/)
