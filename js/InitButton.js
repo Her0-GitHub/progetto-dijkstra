@@ -18,10 +18,16 @@ const action = {
 };
 //let ActiveAction = action.Noting;
 
+function printInFooter(actionName) {
+    if(actionName === action.Noting) $('#footer-content').hide(); // optimizable
+    else $('#footer-content').show();
+    $('#footer-text').text(actionName);
+}
+
 function ON(element, elementAction, actionName) {
     console.log("ON");
     disableAll();
-    //printInFooter(actionName);
+    printInFooter(actionName);
     setButtons();
     $(element).off('click').click(elementAction.OFF);
 }
@@ -29,7 +35,7 @@ function ON(element, elementAction, actionName) {
 function OFF(element, elementAction) {
     console.log("OFF");
     disableAll();
-    //printInFooter(action.Noting);
+    printInFooter(action.Noting);
     $(element).off('click').click(elementAction.ON);
 }
 
@@ -45,12 +51,23 @@ let buttonPlaceNode = {
     }
 
 }
+let selectedNode = null;
 
 let buttonPlaceLine = {
     ON: function () {
         ON(this, buttonPlaceLine, action.placeLine);
 
-        // TODO: implement line placement
+        // Implement line placement
+        $('.node').click(function () {
+            if (selectedNode === null) {
+                selectedNode = this;
+                $(this).addClass('selected')
+            } else {
+                placeLine(selectedNode.id, this.id);
+                $(selectedNode).removeClass('selected');
+                selectedNode = null;
+            }
+        });
     },
     OFF: function () {
         OFF(this, buttonPlaceLine);
@@ -76,8 +93,12 @@ let buttonDeleteNodeLine = {
         $('.node').click(function () {
             $(this).remove();
             nDeletedNode.push(this.id);
-
-
+            $('.line').each((line) => {
+                if (line.id.includes(this.id)) $(line).remove();
+            });
+        });
+        $('.line').click(function () {
+            $(this).remove();
         });
     },
     OFF: function () {

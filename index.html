@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Lorenzo Landini">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/pages/home.css">
     <!-- JS -->
     <script src="js/script.js" defer></script>
+    <script src="js/main.js" defer></script>
     <script src="js/InitButton.js" defer></script>
     <script src="js/pages/home.js" defer></script>
     <!-- Jquery -->
@@ -37,24 +38,24 @@
             7. Dijkstra (Play)
         -->
         <div id="nav-options" class="container">
-            <h1></h1>
+            <!--<h1></h1>-->
             <div id="nav-buttons">
-                <button class="btn btn-primary" id="loadGraph" title=""><i class="fa-solid fa-diagram-project"></i></button>
-                <button class="btn btn-primary" id="RandomGraphWithoutLine" title="Random graph without line"><i class="fa-solid fa-dice"></i></button>
+                <button class="btn btn-primary" id="loadGraph" title="Carica un Grafo"><i class="fa-solid fa-diagram-project"></i></button>
+                <button class="btn btn-primary" id="RandomGraphWithoutLine" title="Crea un Grafo Random senza line"><i class="fa-solid fa-dice"></i></button>
                 <div class="nav-separator"></div>
-                <button class="btn btn-primary nav-buttons" id="placeNodes" title="Place nodes"><i class="fa-solid fa-circle"></i></button>
-                <button class="btn btn-primary nav-buttons" id="placeLines" title="Place lines"><i class="fa-solid fa-slash"></i></button>
-                <button class="btn btn-primary nav-buttons" id="editNodesAndLines" title="Edit nodes and lines"><i class="fa-solid fa-pencil"></i></button>
-                <button class="btn btn-primary nav-buttons" id="deleteNodesAndLines" title="Delete nodes and lines"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-primary nav-buttons" id="placeNodes" title="Piazza un nodo"><i class="fa-solid fa-circle"></i></button>
+                <button class="btn btn-primary nav-buttons" id="placeLines" title="Piazza una linea"><i class="fa-solid fa-slash"></i></button>
+                <button class="btn btn-primary nav-buttons" id="editNodesAndLines" title="Muovi un nodo"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                <button class="btn btn-primary nav-buttons" id="deleteNodesAndLines" title="Cancella nodi e linee"><i class="fa-solid fa-trash"></i></button>
                 <div class="nav-separator"></div>
-                <button class="btn btn-primary" id="dijkstra" title="Dijkstra"><i class="fa-solid fa-play"></i></button>
+                <button class="btn btn-primary" id="dijkstra" title="Esegui Algoritmo di Dijkstra"><i class="fa-solid fa-play"></i></button>
             </div>
         </div>
     </nav>
 
     <footer>
-        <div id= class="container">
-            <h2></h2>
+        <div id="footer-content">
+            <h1 id="footer-text"></h1>
         </div>
     </footer>
 </body>

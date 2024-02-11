@@ -3,6 +3,7 @@ body{
     opacity: 1;
     background-image: radial-gradient(#ffdecb 2px, rgba(255,255,255,0) 2px);
     background-size: 40px 40px;
+    transition: 0.5s
 }
 .line{
     position: absolute;
@@ -35,7 +36,13 @@ input{
     align-items: center;
     color: white;
     font-size: 50px;
+    font-weight: bold;
     z-index: 0;
+    box-shadow: 0 0 10px 0 black;
+}
+.selected{
+    cursor: pointer;
+    border: #2b2d30 5px solid;
 }
 #nav{
     z-index: 1;
@@ -65,12 +72,38 @@ input{
     display: flex;
     justify-content: center;
 }
+#nav-buttons button{
+    box-shadow: 0 0 10px 0 black;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 .btn-primary{
     margin: 20px 10px;
 }
 
-
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}
-input[type="number"] {-moz-appearance: textfield;}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    color: white;
+    z-index: 1;
+    height: 50px;
+}
+#footer-content{
+    background-color: #2b2d30;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+footer h1{
+    font-size: 28px;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
