@@ -1,3 +1,4 @@
+
 let x = 0;
 let y = 0;
 let nNode = 0;
@@ -23,16 +24,6 @@ $(window).mousemove((e) => {
     x = e.pageX; y = e.pageY;
     if (debug) console.log(x, y);
 });
-
-
-/*function checkOverlap(node, x, y) {
-    $(".node").each(function (node2) {
-        if (Math.abs(node2.offsetLeft - x) < nodeSize && Math.abs(node2.offsetTop - y) < nodeSize) {
-            node.style.left = (node2.offsetLeft + nodeSize) + "px";
-            node.style.top = (node2.offsetTop + nodeSize) + "px";
-        }
-    });
-}*/
 
 function placeNode(x, y) { // ok
     if(nNode - nDeletedNode.length >= 26 * 2) return;
@@ -81,11 +72,6 @@ function placeLine(from, to, weight=(Math.floor(Math.random() * 15)+1)) { // ok
     );
 }
 
-placeNode(520, 173)
-placeNode(121, 128)
-placeNode(173, 489)
-placeNode(464, 423)
-placeNode(998, 342)
 
 
 function isOverlap(cord1, cord2) {
@@ -115,7 +101,3 @@ function placeRandomNode(nRandNode = 10) {
         placeNode(newRandomCord[0], newRandomCord[1]);
     }
 }
-
-// TODO: load preset nodes and lines
-// TODO: make preset graph
-

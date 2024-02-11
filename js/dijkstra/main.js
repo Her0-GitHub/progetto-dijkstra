@@ -106,6 +106,9 @@ let dijkstra = {
             if (selectedNode === null) {
                 selectedNode = [this, null];
                 $(this).addClass('selected');
+                $('#dijkstra')
+                    .off('click').click(dijkstra.SECOND)
+                    .children('i').removeClass('fa-play').addClass('fa-check');
             }
             else if (selectedNode[0] === this) {
                 $(this).removeClass('selected');
@@ -117,9 +120,7 @@ let dijkstra = {
                 $(this).addClass('selected');
             }
         });
-        $('#dijkstra')
-            .off('click').click(dijkstra.SECOND)
-            .children('i').removeClass('fa-play').addClass('fa-check');
+
     },
     SECOND: function () {
         printInFooter(action.dijkstra2);
@@ -127,6 +128,9 @@ let dijkstra = {
             if(selectedNode[1] === null) {
                 selectedNode[1] = this;
                 $(this).addClass('selected');
+                $('#dijkstra')
+                    .off('click').click(dijkstra.EXECUTE)
+                    .children('i').removeClass('fa-check').addClass('fa-play');
             }
             else if(selectedNode[1] === this) {
                 $(this).removeClass('selected');
@@ -138,10 +142,7 @@ let dijkstra = {
                 $(this).addClass('selected');
             }
         });
-
-        $('#dijkstra')
-            .off('click').click(dijkstra.EXECUTE)
-            .children('i').removeClass('fa-check').addClass('fa-play');
+        $('#dijkstra').children('i').removeClass('fa-check').addClass('fa-play');
     },
     EXECUTE: function () {
         let graph = initGraph();
