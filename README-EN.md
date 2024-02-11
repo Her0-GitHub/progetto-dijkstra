@@ -30,3 +30,19 @@ A very clean interface with various buttons arranged on the sides of the screen 
 - [Bootstrap Docs](https://getbootstrap.com/docs)
 - [JavaScript Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [jQuery Docs](https://api.jquery.com/)
+
+## Pseudocode
+```peudocode
+for each vertex v:
+    dist[v] = Infinity
+    prev[v] = none
+dist[source] = 0
+set all vertices to unexplored
+while destination not explored:
+    v = least-valued unexplored vertex
+    set v to explored
+    for each edge (v, w):
+        if dist[v] + len(v, w) < dist[w]:
+            dist[w] = dist[v] + len(v,w)
+            prev[w] = v
+```

@@ -30,3 +30,21 @@ Un'interfaccia molto pulita con vari bottoni disposti nei lati dello schermo per
 - [Boostrap Docs](https://getbootstrap.com/docs)
 - [Javascrpit Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [jQuery Docs](https://api.jquery.com/)
+
+## Pseudocodice
+```peudocode
+Per ogni vertice v:
+    Imposta la distanza di v a Infinito
+    Imposta il vertice precedente di v a nessuno
+    
+Imposta la distanza della sorgente a 0
+Imposta tutti i vertici come non esplorati
+
+Mentre la destinazione non è esplorata:
+    v = vertice non esplorato con il valore minore
+    Imposta v come esplorato
+    Per ogni bordo (v, w):
+        Se la distanza di v + la lunghezza di (v, w) è minore della distanza di w:
+            Imposta la distanza di w a distanza di v + lunghezza di (v,w)
+            Imposta il vertice precedente di w a v
+```
