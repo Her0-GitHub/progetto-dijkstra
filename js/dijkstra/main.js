@@ -3,7 +3,7 @@ class Node {
         this.name = name;
         this.known = false;
         this.paths = paths || [];
-        this.shortestPath = ["", null];
+        this.shortestPath = ["", Infinity];
     }
     addPath(path) {
         this.paths.push(path);
@@ -15,7 +15,6 @@ class Node {
         return this;
     }
     goTo() {
-        // this.shortestPath = path;
         this.known = true;
         console.log("Visiting " + this.name + " with path " + this.shortestPath + " and known " + this.known + ".");
         return this;
@@ -42,27 +41,21 @@ class Graph {
         do {
             // per ogni path del nodo corrente
             currentNode.paths.forEach(path => { // example path = ["B", 3]
-                // ottiene il nodo corrente
-                let visitingNode = this.getNodeByName(path[0]);
-                // se il nodo non è conosciuto
-                if (!visitingNode.known) {
-                    // if not set short path        or      if the old path is bigger than the new path (pathToCurrent + path)
-                    if (visitingNode.shortestPath[1] === null || visitingNode.shortestPath[1] > currentNode.shortestPath[1] + path[1]) {
-                        // set shortestPath to [name, pathToCurrent + path]
-                        visitingNode.shortestPath = [currentNode.name, currentNode.shortestPath[1] + path[1]];
-                    }
-                    // if is null        or the nextNode is bigger than the visitingNode
-                    if(nextNode === null || nextNode.shortestPath[1] > visitingNode.shortestPath[1]) {
-                        nextNode = visitingNode;
-                    }
+                let node = this.getNodeByName(path[0]);
+                if (node.known) return;
+                if(currentNode.shortestPath[1] + path[1] < node.shortestPath[1]) {
+                    node.shortestPath = [currentNode.name, currentNode.shortestPath[1] + path[1]];
                 }
             });
-            if (nextNode === null) {
-                nextNode = this.nodes.find(node => !node.known);
-            }
+            // per ogni nodo non visitato
+            this.nodes.forEach(node => {
+                if (node.known) return;
+                if (nextNode == null || node.shortestPath[1] < nextNode.shortestPath[1]) nextNode = node;
+            });
+            if (nextNode == null) return;
             currentNode = nextNode.goTo();
             nextNode = null;
-        } while (this.nodes.some(node => !node.known));
+        } while (this.nodes.some(node => !node.known)); // finché esiste un nodo non visitato
     }
     doDijkstraFromTo(start, end) {
         this.doDijkstraFrom(start);
@@ -80,6 +73,7 @@ class Graph {
         path.push(start);
         console.log(path.reverse().join(" -> "));
         console.log("Weight: " + endNode.shortestPath[1]);
+        return path;
     }
 }
 
