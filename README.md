@@ -1,3 +1,5 @@
+<img width="120" height="120" style="float: left; margin: 0 15px 0 0;" alt="Dijkstra logo" src="https://raw.githubusercontent.com/Her0-GitHub/progetto-dijkstra/master/img/dijkstra-logo.png">
+
 # Progetto Dijkstra
 
 [English](./README-EN.md)
