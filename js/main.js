@@ -15,7 +15,7 @@ let currentClickAction = function(){}//placeNode;
 
 $(window).mouseup(() => {
     if ((x > offset && y > offset) && (x + offset < innerWidth && y + offset < innerHeight)){
-        /*if (debug)*/ console.log("[" + x + ", " + y + "]");
+        if (debug) console.log(`"x": ${x}, "y": ${y}`);
         currentClickAction(x, y);
     }
 });
@@ -72,8 +72,6 @@ function placeLine(from, to, weight=(Math.floor(Math.random() * 15)+1)) { // ok
     );
 }
 
-
-
 function isOverlap(cord1, cord2) {
     return Math.abs(cord1[0] - cord2[0]) < nodeSize * 2 &&
         Math.abs(cord1[1] - cord2[1]) < nodeSize * 2;
@@ -84,7 +82,7 @@ function getRandomCord() {
         Math.floor(Math.random() * WIDTH) + offset,
         Math.floor(Math.random() * HEIGHT) + offset + 20
     ];
-} // ok
+}
 
 function placeRandomNode(nRandNode = 10) {
     const randomCord = [];
@@ -97,7 +95,6 @@ function placeRandomNode(nRandNode = 10) {
         } while (randomCord.some(cord => isOverlap(cord, newRandomCord)));
         if(attempt > 3) continue;
         randomCord.push(newRandomCord);
-        // console.log(newRandomCord.join(","));
         placeNode(newRandomCord[0], newRandomCord[1]);
     }
 }
