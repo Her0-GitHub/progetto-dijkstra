@@ -166,7 +166,7 @@ let dijkstra = {
         $('.node').removeClass('minimum-path');
         $('.line').removeClass('minimum-path');
         printInFooter(action.noting);
-        setButtons();
+        onAll();
         enableInput();
         $('#dijkstra')
             .off('click').click(dijkstra.FIST)

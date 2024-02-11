@@ -19,6 +19,13 @@ function setButtons(){
     $('#placeRandomNodes').off('click').click(placeRandomNodes);
 }
 
+function onAll(){
+    setButtons();
+    $('.nav-buttons').removeClass('disabled');
+    $('#loadGraph').removeClass('disabled')
+    $('#placeRandomNodes').removeClass('disabled');
+}
+
 function offAll() {
     $('.nav-buttons').off('click').addClass('disabled');
     $('#loadGraph').off('click').addClass('disabled');
