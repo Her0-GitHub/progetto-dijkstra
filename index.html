@@ -13,6 +13,7 @@
     <script src="js/script.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/InitButton.js" defer></script>
+    <script src="js/dijkstra/main.js" defer></script>
     <script src="js/pages/home.js" defer></script>
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -41,11 +42,11 @@
             <!--<h1></h1>-->
             <div id="nav-buttons">
                 <button class="btn btn-primary" id="loadGraph" title="Carica un Grafo"><i class="fa-solid fa-diagram-project"></i></button>
-                <button class="btn btn-primary" id="RandomGraphWithoutLine" title="Crea un Grafo Random senza line"><i class="fa-solid fa-dice"></i></button>
+                <button class="btn btn-primary" id="placeRandomNodes" title="Crea un Grafo Random senza line"><i class="fa-solid fa-dice"></i></button>
                 <div class="nav-separator"></div>
                 <button class="btn btn-primary nav-buttons" id="placeNodes" title="Piazza un nodo"><i class="fa-solid fa-circle"></i></button>
                 <button class="btn btn-primary nav-buttons" id="placeLines" title="Piazza una linea"><i class="fa-solid fa-slash"></i></button>
-                <button class="btn btn-primary nav-buttons" id="editNodesAndLines" title="Muovi un nodo"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                <button class="btn btn-primary nav-buttons" id="moveNodes" title="Muovi un nodo"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
                 <button class="btn btn-primary nav-buttons" id="deleteNodesAndLines" title="Cancella nodi e linee"><i class="fa-solid fa-trash"></i></button>
                 <div class="nav-separator"></div>
                 <button class="btn btn-primary" id="dijkstra" title="Esegui Algoritmo di Dijkstra"><i class="fa-solid fa-play"></i></button>

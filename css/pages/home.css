@@ -25,6 +25,9 @@ input{
     text-align: center;
     outline: none;
 }
+input:disabled {
+    background-color: #f8f9fa;
+}
 .node{
     position: absolute;
     border-radius: 50%;
@@ -106,4 +109,8 @@ footer h1{
     position: absolute;
     width: 100%;
     text-align: center;
+}
+.minimum-path{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }

@@ -77,12 +77,100 @@ class Graph {
     }
 }
 
-let graph = Graph.randomGraph(10);
-graph.doDijkstraFromTo('A', 'F');
-/*graph.addNode(new Node('A', [["B", 3], ["C", 2], ["D", 6]]));
-graph.addNode(new Node('B', [["A", 3], ["D", 2], ["E", 2]]));
-graph.addNode(new Node('C', [["A", 2], ["D", 1], ["F", 3]]));
-graph.addNode(new Node('D', [["A", 6], ["B", 2], ["C", 1], ["E", 4], ["F", 2]]));
-graph.addNode(new Node('E', [["B", 2], ["D", 4], ["F", 1]]));
-graph.addNode(new Node('F', [["C", 3], ["D", 2], ["E", 1]]));
-graph.doDijkstraFrom('A', 'F');*/
+initGraph = ()=>{
+    let graph = new Graph();
+    $('.node').each(function () {
+        graph.addNode(new Node(this.id));
+    });
+    $('.line').each(function () {
+        let nodes = this.id.split("-");
+        let weight = parseInt($(this).find('input').val());
+        graph.getNodeByName(nodes[0]).addPath([nodes[1], weight]);
+        graph.getNodeByName(nodes[1]).addPath([nodes[0], weight]);
+    });
+    return graph;
+}
+
+let dijkstra = {
+    FIST: function () {
+        let nodes = $('.node');
+        if (nodes.length < 2) {
+            printInFooter("Nodi insufficienti per eseguire l'algoritmo.");
+            return;
+        }
+        disableAll();
+        offAll();
+        disableInput();
+        printInFooter(action.dijkstra1);
+        nodes.click(function () {
+            if (selectedNode === null) {
+                selectedNode = [this, null];
+                $(this).addClass('selected');
+            }
+            else if (selectedNode[0] === this) {
+                $(this).removeClass('selected');
+                selectedNode = null;
+            }
+            else {
+                $(selectedNode[0]).removeClass('selected');
+                selectedNode[0] = this;
+                $(this).addClass('selected');
+            }
+        });
+        $('#dijkstra')
+            .off('click').click(dijkstra.SECOND)
+            .children('i').removeClass('fa-play').addClass('fa-check');
+    },
+    SECOND: function () {
+        printInFooter(action.dijkstra2);
+        $('.node').off('click').click(function (){
+            if(selectedNode[1] === null) {
+                selectedNode[1] = this;
+                $(this).addClass('selected');
+            }
+            else if(selectedNode[1] === this) {
+                $(this).removeClass('selected');
+                selectedNode[1] = null;
+            }
+            else {
+                $(selectedNode[1]).removeClass('selected');
+                selectedNode[1] = this;
+                $(this).addClass('selected');
+            }
+        });
+
+        $('#dijkstra')
+            .off('click').click(dijkstra.EXECUTE)
+            .children('i').removeClass('fa-check').addClass('fa-play');
+    },
+    EXECUTE: function () {
+        let graph = initGraph();
+        let result = graph.doDijkstraFromTo(selectedNode[0].id, selectedNode[1].id);
+        printInFooter(result.join(" -> "));
+        result.forEach(node => {
+            $('#' + node).addClass('minimum-path');
+        });
+        for (let i = 0; i < result.length; i++) {
+            $(`#${result[i]}`).addClass('minimum-path');
+            $(`#${result[i]}-${result[i + 1]},#${result[i+1]}-${result[i]}`).addClass('minimum-path');
+        }
+        $(selectedNode[0]).removeClass('selected');
+        $(selectedNode[1]).removeClass('selected');
+        selectedNode = null;
+        $('#dijkstra')
+            .off('click').click(dijkstra.CLEAR)
+            .children('i').removeClass('fa-play').addClass('fa-rotate-right');
+    },
+    CLEAR: function () {
+        $('.node').removeClass('minimum-path');
+        $('.line').removeClass('minimum-path');
+        printInFooter(action.noting);
+        setButtons();
+        enableInput();
+        $('#dijkstra')
+            .off('click').click(dijkstra.FIST)
+            .children('i').removeClass('fa-rotate-right').addClass('fa-play');
+    }
+}
+
+$('#dijkstra').click(dijkstra.FIST);

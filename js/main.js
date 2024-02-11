@@ -2,6 +2,7 @@ let x = 0;
 let y = 0;
 let nNode = 0;
 let nDeletedNode = [];
+let selectedNode = null;
 
 const debug = false;
 const offset = 100; // 100px
@@ -13,7 +14,7 @@ let currentClickAction = function(){}//placeNode;
 
 $(window).mouseup(() => {
     if ((x > offset && y > offset) && (x + offset < innerWidth && y + offset < innerHeight)){
-        if (debug) console.log("QUI " + x, y);
+        /*if (debug)*/ console.log("[" + x + ", " + y + "]");
         currentClickAction(x, y);
     }
 });
@@ -45,7 +46,7 @@ function placeNode(x, y) { // ok
     );
 }
 
-function placeLine(from, to, weight=(Math.floor(Math.random() * 15))) { // ok
+function placeLine(from, to, weight=(Math.floor(Math.random() * 15)+1)) { // ok
     if (from === to || $(`#${from}-${to},#${to}-${from}`).length === 1) return;
     let fromNode = $(`#${from}`);
     let toNode = $(`#${to}`);
@@ -80,15 +81,12 @@ function placeLine(from, to, weight=(Math.floor(Math.random() * 15))) { // ok
     );
 }
 
+placeNode(520, 173)
+placeNode(121, 128)
+placeNode(173, 489)
+placeNode(464, 423)
+placeNode(998, 342)
 
-placeNode(200, 500)
-placeNode(800, 500)
-placeNode(500, 200)
-placeNode(800, 200)
-placeLine("B", "A")
-placeLine("A", "C")
-placeLine("C", "D")
-placeLine("B", "D")
 
 function isOverlap(cord1, cord2) {
     return Math.abs(cord1[0] - cord2[0]) < nodeSize * 2 &&
@@ -98,11 +96,11 @@ function isOverlap(cord1, cord2) {
 function getRandomCord() {
     return [
         Math.floor(Math.random() * WIDTH) + offset,
-        Math.floor(Math.random() * HEIGHT) + offset
+        Math.floor(Math.random() * HEIGHT) + offset + 20
     ];
 } // ok
 
-function placeRandomNode(nRandNode) { // TODO: fix this
+function placeRandomNode(nRandNode = 10) {
     const randomCord = [];
 
     for (let i = 0; i < nRandNode; i++) {
@@ -117,6 +115,7 @@ function placeRandomNode(nRandNode) { // TODO: fix this
         placeNode(newRandomCord[0], newRandomCord[1]);
     }
 }
+
 // TODO: load preset nodes and lines
 // TODO: make preset graph
 
