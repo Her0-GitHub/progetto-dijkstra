@@ -21,6 +21,7 @@ function setButtons(){
 
 function offAll() {
     $('.nav-buttons').off('click').addClass('disabled');
+    $('#loadGraph').off('click').addClass('disabled');
     $('#placeRandomNodes').off('click').addClass('disabled');
 }
 function disableInput() {
@@ -56,15 +57,19 @@ function loadGraph() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            data = data[Math.floor(Math.random() * data.length)];
 
-            for (let nodeName in data[0]) {
-                let node = data[0][nodeName];
+            for (let nodeName in data) {
+                let node = data[nodeName];
                 placeNode(node.x, node.y);
-                console.log(node.paths, node.paths.length);
+            }
+            for (let nodeName in data) {
+                let node = data[nodeName];
                 for (let i = 0; i < node.paths.length; i++) {
                     placeLine(nodeName, node.paths[i]);
                 }
             }
+
 
 
         })
@@ -141,6 +146,8 @@ let buttonMoveNodeLine = {
                 }
             } else {
                 // TODO: implement node move
+
+
                 $(selectedNode).removeClass('selected');
                 selectedNode = null;
             }
