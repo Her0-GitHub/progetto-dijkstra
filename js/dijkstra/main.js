@@ -60,6 +60,9 @@ class Graph {
     doDijkstraFromTo(start, end) {
         this.doDijkstraFrom(start);
         let endNode = this.getNodeByName(end);
+        if (endNode.shortestPath[1] === Infinity) {
+            return undefined;
+        }
         let path = [];
         let currentNode = endNode;
         do {
@@ -71,8 +74,7 @@ class Graph {
             }
         } while (currentNode.name !== start);
         path.push(start);
-        console.log(path.reverse().join(" -> "));
-        console.log("Weight: " + endNode.shortestPath[1]);
+        path.reverse();
         return path;
     }
 }
@@ -95,7 +97,7 @@ let dijkstra = {
     FIST: function () {
         let nodes = $('.node');
         if (nodes.length < 2) {
-            printInFooter("Nodi insufficienti per eseguire l'algoritmo.");
+            printInFooter("Nodi insufficienti per eseguire l'algoritmo.", 1);
             return;
         }
         disableAll();
@@ -147,6 +149,14 @@ let dijkstra = {
     EXECUTE: function () {
         let graph = initGraph();
         let result = graph.doDijkstraFromTo(selectedNode[0].id, selectedNode[1].id);
+        $(selectedNode[0]).removeClass('selected');
+        $(selectedNode[1]).removeClass('selected');
+        selectedNode = null;
+        if(result === undefined) {
+            printInFooter("Nessun percorso trovato.", 1);
+            dijkstra.RESET();
+            return;
+        }
         printInFooter(result.join(" -> "));
         result.forEach(node => {
             $('#' + node).addClass('minimum-path');
@@ -155,9 +165,6 @@ let dijkstra = {
             $(`#${result[i]}`).addClass('minimum-path');
             $(`#${result[i]}-${result[i + 1]},#${result[i+1]}-${result[i]}`).addClass('minimum-path');
         }
-        $(selectedNode[0]).removeClass('selected');
-        $(selectedNode[1]).removeClass('selected');
-        selectedNode = null;
         $('#dijkstra')
             .off('click').click(dijkstra.CLEAR)
             .children('i').removeClass('fa-play').addClass('fa-rotate-right');
@@ -166,6 +173,9 @@ let dijkstra = {
         $('.node').removeClass('minimum-path');
         $('.line').removeClass('minimum-path');
         printInFooter(action.noting);
+        dijkstra.RESET();
+    },
+    RESET: function () {
         onAll();
         enableInput();
         $('#dijkstra')

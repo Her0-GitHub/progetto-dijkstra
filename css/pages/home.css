@@ -94,6 +94,7 @@ footer{
     color: white;
     z-index: 1;
     height: 50px;
+    transition: 0.5s;
 }
 #footer-content{
     background-color: #2b2d30;

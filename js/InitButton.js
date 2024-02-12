@@ -51,10 +51,14 @@ const action = {
     noting: ""
 };
 
-function printInFooter(actionName) {
-    if(actionName === action.noting) $('#footer-content').hide(); // optimizable
-    else $('#footer-content').show();
-    $('#footer-text').text(actionName);
+function printInFooter(actionName, duration = 0) {
+    if(duration > 0) setTimeout(() => {printInFooter(action.noting)}, duration * 1000);
+    if(actionName === action.noting) {
+        $('#footer-content').fadeOut();
+    } else {
+        $('#footer-content').fadeIn();
+        $('#footer-text').text(actionName);
+    }
 }
 
 function loadGraph() {
