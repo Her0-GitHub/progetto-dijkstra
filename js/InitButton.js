@@ -173,9 +173,7 @@ let buttonDeleteNodeLine = {
         $('.node').click(function () {
             $(this).remove();
             nDeletedNode.push(this.id);
-            $('.line').each(line => {
-                // TODO: implement line delete
-            });
+            $(`.${this.id}-line`).remove();
         });
         $('.line').click(function () {
             $(this).remove();

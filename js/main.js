@@ -51,7 +51,7 @@ function placeLine(from, to, weight=(Math.floor(Math.random() * 15)+1)) { // ok
     }
     let angle = Math.atan2(y[1] - y[0], x[1] - x[0]);
     $("body").append($("<div>")
-        .addClass("line")
+        .addClass(`line ${from}-line ${to}-line`)
         .attr('id', from + "-" + to)
         .css({
             left: x[0] + "px", top: y[0] + "px",
