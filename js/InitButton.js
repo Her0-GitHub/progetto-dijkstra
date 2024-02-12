@@ -13,7 +13,7 @@ function removeAll() {
 function setButtons(){
     $('#placeNodes').off('click').click(buttonPlaceNode.ON);
     $('#placeLines').off('click').click(buttonPlaceLine.ON);
-    $('#moveNodeLine').off('click').click(buttonMoveNodeLine.ON);
+    $('#moveNodes').off('click').click(buttonMoveNode.ON);
     $('#deleteNodesAndLines').off('click').click(buttonDeleteNodeLine.ON);
     $('#loadGraph').off('click').click(loadGraph);
     $('#placeRandomNodes').off('click').click(placeRandomNodes);
@@ -42,7 +42,7 @@ function enableInput() {
 const action = {
     placeNode: "Inserisci nodo",
     placeLine: "Inserisci linea",
-    editNodeLine: "Modifica nodo/linea",
+    moveNode: "Muovi un nodo",
     deleteNodesAndLines: "Cancella nodi e linee",
     placeRandomNode: "Inserisci nodi random",
     loadGraph: "Carica grafo",
@@ -82,8 +82,6 @@ function loadGraph() {
         })
         .catch(error => console.error('Errore nel caricamento del file JSON:', error));
 }
-
-
 
 function placeRandomNodes() {
     removeAll();
@@ -139,29 +137,28 @@ let buttonPlaceLine = {
     }
 }
 
-let buttonMoveNodeLine = {
+let buttonMoveNode = {
     ON: function () {
-        ON(this, buttonMoveNodeLine, action.editNodeLine);
+        ON(this, buttonMoveNode, action.moveNode);
 
         // implement node/line move
-        $('.node').click(function () {
-            if (selectedNode === null) {
-                selectedNode = this;
-                $(this).addClass('selected')
-                currentClickAction = function (x, y) { // TODO: fix this
-                    $(selectedNode).css({left: (x - (nodeSize / 2)) + "px", top: (y - (nodeSize / 2)) + "px"});
-                }
-            } else {
-                // TODO: implement node move
-
-
-                $(selectedNode).removeClass('selected');
-                selectedNode = null;
-            }
+        $('.node').draggable({
+            stop: function () {
+                let node = this.id;
+                let connects = [];
+                $(`.${node}-line`).each((i, line) => {
+                    connects.push(line.id.split('-'));
+                }).remove();
+                connects.forEach(connectedNode => {
+                    placeLine(node, connectedNode[0] === node ? connectedNode[1] : connectedNode[0]);
+                });
+            },
+            disabled: false
         });
     },
     OFF: function () {
-        OFF(this, buttonMoveNodeLine);
+        OFF(this, buttonMoveNode);
+        $('.node').draggable('disable');
     }
 }
 
@@ -183,7 +180,5 @@ let buttonDeleteNodeLine = {
         OFF(this, buttonDeleteNodeLine);
     }
 }
-
-
 
 setButtons();
