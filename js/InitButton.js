@@ -2,7 +2,7 @@ const noting = function () {}
 
 function disableAll() {
     currentClickAction = noting;
-    $('.node').off('click');
+    $('.node').off('click').draggable('disable');
     $('.line').off('click');
 }
 function removeAll() {
@@ -151,10 +151,10 @@ let buttonMoveNode = {
                 let node = this.id;
                 let connects = [];
                 $(`.${node}-line`).each((i, line) => {
-                    connects.push(line.id.split('-'));
+                    connects.push([... line.id.split('-'), $(line).children('div').children('input').val()]);
                 }).remove();
                 connects.forEach(connectedNode => {
-                    placeLine(node, connectedNode[0] === node ? connectedNode[1] : connectedNode[0]);
+                    placeLine(node, connectedNode[0] === node ? connectedNode[1] : connectedNode[0], connectedNode[2]);
                 });
             },
             disabled: false
