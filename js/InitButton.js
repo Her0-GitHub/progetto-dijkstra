@@ -146,19 +146,7 @@ let buttonMoveNode = {
         ON(this, buttonMoveNode, action.moveNode);
 
         // implement node/line move
-        $('.node').draggable({
-            stop: function () {
-                let node = this.id;
-                let connects = [];
-                $(`.${node}-line`).each((i, line) => {
-                    connects.push([... line.id.split('-'), $(line).children('div').children('input').val()]);
-                }).remove();
-                connects.forEach(connectedNode => {
-                    placeLine(node, connectedNode[0] === node ? connectedNode[1] : connectedNode[0], connectedNode[2]);
-                });
-            },
-            disabled: false
-        });
+        $('.node').draggable({disable: false});
     },
     OFF: function () {
         OFF(this, buttonMoveNode);

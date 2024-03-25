@@ -34,6 +34,19 @@ function placeNode(x, y) { // ok
             .text(name)
             .attr('id', name)
             .css({left: (x - (nodeSize / 2)) + "px", top: (y - (nodeSize / 2)) + "px"})
+            .draggable({
+                stop: function () {
+                    let node = this.id;
+                    let connects = [];
+                    $(`.${node}-line`).each((i, line) => {
+                        connects.push([... line.id.split('-'), $(line).children('div').children('input').val()]);
+                    }).remove();
+                    connects.forEach(connectedNode => {
+                        placeLine(node, connectedNode[0] === node ? connectedNode[1] : connectedNode[0], connectedNode[2]);
+                    });
+                },
+                disabled: true
+            })
     );
 }
 
